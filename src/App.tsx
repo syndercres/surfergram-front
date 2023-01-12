@@ -25,10 +25,10 @@ function App(): JSX.Element {
       <button>add a spot</button>
     </div>
       <div>
-        {pageView=="main" ? (<MainPage handleChangeSpotId={selectSpot}/>):<></>}
+        {pageView==="main" ? (<MainPage handleChangeSpotId={selectSpot}/>):<></>}
       </div>
       <div>
-        {pageView=="comment" ? (<CommentPage handleReturnMain={backToSpots}/>):<></>}      
+        {pageView==="comment" ? (<CommentPage spotId={displaySpotId} handleReturnMain={backToSpots}/>):<></>}      
       </div>
     </>
   );

@@ -12,6 +12,7 @@ export interface Icomment{
 }
 interface Props {        
     handleReturnMain: () => void;
+    spotId:number;
   }
 const URL = "https://surfergram.onrender.com"
 
@@ -26,17 +27,26 @@ export default function CommentPage(props:Props): JSX.Element{
         rating:"",
       });
 
-    const getCommentsFromServer = async () => {
-        //   console.log("fetching list from api")
-        try {
-          const response = await axios.get(URL + "/comments");
-          setCommentList(response.data.rows);
-        } catch (error) {
-          console.error("you have an error with comments");
-        }
-     };
 
-     useEffect(() => {getCommentsFromServer();console.log(commentList)},[])
+      const getCommentsFromServer = async () => {
+        console.log("fetching spot list from api")
+      try {
+        const response = await axios.get(URL + "/comments");
+        console.log(response.data.rows)
+        setCommentList(response.data.rows)
+
+        setFilterCommentList(commentList.filter((comment)=> {return comment.spot_id == 2}))
+
+        console.log("filter list",filterCommentList)
+
+
+      } catch (error) {
+        console.error("you have an error with spots");
+      }
+      };
+  
+
+     useEffect(() => {getCommentsFromServer()},[props.spotId])
 
     return (<div>
             <div className="comment-container">

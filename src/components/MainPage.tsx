@@ -33,7 +33,7 @@ const [spotSubmit, setSpotSubmit] = useState({
     getSpotsFromServer();
   },[]);
   const getSpotsFromServer = async () => {
-      console.log("fetching list from api")
+      console.log("fetching spot list from api")
     try {
       const response = await axios.get(URL + "/spots");
 
@@ -44,9 +44,7 @@ const [spotSubmit, setSpotSubmit] = useState({
     }
     };
 
-  const handleSpotClick = (spot_id:number) => {
-    console.log(spot_id)
-  }
+  
 
     return(
     <>
@@ -58,7 +56,7 @@ const [spotSubmit, setSpotSubmit] = useState({
                     <h2>{spot.name}</h2>
                     <h3>{spot.directions} {spot.rating}</h3>
                     <p>{spot.description}</p>
-                    <button onClick={()=>{handleSpotClick(spot.spot_id)}}>comments</button>
+                    <button onClick={()=>{props.handleChangeSpotId(spot.spot_id)}}>comments</button>
                 </div>
             )
         })}
