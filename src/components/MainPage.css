@@ -1,6 +1,30 @@
-.spot-item{
-    background-color: rgb(58, 136, 146);
-    border-radius: 15px;
-    padding: 30px;
-    margin: 20px;
+body {
+  font-family: "Courier New", Courier, monospace;
+}
+button {
+  height: 40px;
+  border-radius: 15px;
+}
+h2 {
+  height: 40px;
+}
+h3 {
+  height: 40px;
+}
+p {
+  height: 40px;
+}
+.spot-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 5px;
+}
+.spot-item {
+  background-color: rgb(58, 136, 146);
+  border-radius: 15px;
+  padding: 30px;
+  margin: 20px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-gap: 5px;
 }

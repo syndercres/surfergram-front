@@ -24,6 +24,7 @@ const URL = "https://surfergram.onrender.com"
 export default function MainPage(): JSX.Element{
 const [spotList,setSpotList] = useState<Ispot[]>([]);
 const [commentList,setCommentList] = useState<Icomment[]>([]);
+const [filterCommentList,setFilterCommentList] = useState<Icomment[]>([]);
 const [spotSubmit, setSpotSubmit] = useState({
     name: "",
     directions: "",
@@ -49,11 +50,22 @@ const [spotSubmit, setSpotSubmit] = useState({
     } catch (error) {
       console.error("you have an error with spots");
     }
+    };
+      const getCommentsFromServer = async () => {
+        //   console.log("fetching list from api")
+        try {
+          const response = await axios.get(URL + "/comments");
+          setCommentList(response.data.rows);
+        } catch (error) {
+          console.error("you have an error with comments");
+        }
 
 
   };
   const handleSpotClick = (spot_id:number) => {
     console.log(spot_id)
+    getCommentsFromServer()
+    console.log(commentList)
   }
 
     return(
@@ -67,6 +79,17 @@ const [spotSubmit, setSpotSubmit] = useState({
                     <h3>{spot.directions} {spot.rating}</h3>
                     <p>{spot.description}</p>
                     <button onClick={()=>{handleSpotClick(spot.spot_id)}}>comments</button>
+                </div>
+            )
+        })}
+    </div>
+    <div className="comment-container">
+    {commentList.map((comment) => {
+            return(
+                <div className="comment-item" key={comment.comment_id}>
+                    <h2>{comment.name}</h2>
+                    <h3>{comment.comment} </h3>
+                    <p>{comment.rating}</p>
                 </div>
             )
         })}
