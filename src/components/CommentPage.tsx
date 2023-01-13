@@ -17,7 +17,7 @@ const URL = "http://localhost:4006";
 
 export default function CommentPage(props: Props): JSX.Element {
   const [commentList, setCommentList] = useState<Icomment[]>([]);
-  const [filterCommentList, setFilterCommentList] = useState<Icomment[]>([]);
+
 
   const getCommentsFromServer = async () => {
     console.log("fetching comment list from api");
@@ -26,15 +26,7 @@ export default function CommentPage(props: Props): JSX.Element {
 
       setCommentList(response.data.rows);
       console.log("newly retreived comments",response.data.rows)
-      console.log(commentList, "commentList GET");
-      setFilterCommentList(
-        commentList.filter((comment) => {
-          console.log("hello", comment.name);
-          return comment.spot_id === props.spotId;
-        })
-      );
-
-      console.log("filter list", filterCommentList);
+ 
     } catch (error) {
       console.error("you have an error with spots");
     }
@@ -44,12 +36,13 @@ export default function CommentPage(props: Props): JSX.Element {
   useEffect(() => {
     getCommentsFromServer();
   }, [props.spotId]);
+  const filteredCommentList =   commentList.filter((comment) => {return comment.spot_id === props.spotId})
 
   return (
     <div>
       <h1> h1 {props.spotId} props</h1>
       <div className="comment-container">
-        {commentList.map((comment) => {
+        {filteredCommentList.map((comment) => {
           return (
             <div className="comment-item" key={comment.comment_id}>
               <h2>{comment.name}</h2>
