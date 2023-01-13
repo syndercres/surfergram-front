@@ -1,14 +1,10 @@
-
 import MainPage from "./components/MainPage";
 import CommentPage from "./components/CommentPage";
 import { useState } from "react";
 
-
-
 function App(): JSX.Element {
-
-  const [pageView,setPageView] = useState<string>("main")
-  const [displaySpotId, setDisplaySpotId] = useState(0)
+  const [pageView, setPageView] = useState<"comment" | "main">("main");
+  const [displaySpotId, setDisplaySpotId] = useState(0);
   function selectSpot(selectedSpotId: number) {
     setDisplaySpotId(selectedSpotId);
     setPageView("comment");
@@ -16,19 +12,27 @@ function App(): JSX.Element {
   }
 
   function backToSpots() {
-    setPageView("main")
+    setPageView("main");
   }
   return (
     <>
-    <div className="header-buttons">
-      <button onClick={backToSpots}>spots</button>
-      <button>add a spot</button>
-    </div>
-      <div>
-        {pageView==="main" ? (<MainPage handleChangeSpotId={selectSpot}/>):<></>}
+      <div className="header-buttons">
+        <button onClick={backToSpots}>spots</button>
+        <button>add a spot</button>
       </div>
       <div>
-        {pageView==="comment" ? (<CommentPage spotId={displaySpotId} handleReturnMain={backToSpots}/>):<></>}      
+        {pageView === "main" ? (
+          <MainPage handleChangeSpotId={selectSpot} />
+        ) : (
+          <></>
+        )}
+      </div>
+      <div>
+        {pageView === "comment" ? (
+          <CommentPage spotId={displaySpotId} handleReturnMain={backToSpots} />
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );
