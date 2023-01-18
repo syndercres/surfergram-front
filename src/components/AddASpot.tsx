@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import CommentPage from "./CommentPage";
-import "./MainPage.css";
+import { useState } from "react";
 
+import "./MainPage.css";
+const URL = "http://localhost:4006";
 export interface Ispot {
   spot_id: number;
   name: string;
@@ -47,7 +47,7 @@ export default function AddASpot():JSX.Element{
     const handleSpotSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //  console.log("submitted", pasteSubmit);
-    
+        console.log(spotSubmit)
         postSpotToServer(
             spotSubmit.name,
             spotSubmit.directions,
@@ -70,7 +70,7 @@ export default function AddASpot():JSX.Element{
           />
 
           <input
-            placeholder="comment here"
+            placeholder="best wind directions"
             type="text"
             value={spotSubmit.directions}
             onChange={(e) =>
@@ -80,7 +80,18 @@ export default function AddASpot():JSX.Element{
               })
             }
           />
-           <input
+        <input
+            placeholder="spot description"
+            type="text"
+            value={spotSubmit.description}
+            onChange={(e) =>
+              setSpotSubmit({
+                ...spotSubmit,
+                description: e.target.value,
+              })
+            }
+          />
+        <input
             placeholder="your rating"
             type="number"
             value={spotSubmit.rating}
@@ -91,6 +102,7 @@ export default function AddASpot():JSX.Element{
               })
             }
           />
+
           <input type="submit" />
         </form>
       </div>
