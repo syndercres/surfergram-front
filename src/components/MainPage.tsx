@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CommentPage from "./CommentPage";
 import "./MainPage.css";
 
+
 export interface Ispot {
   spot_id: number;
   name: string;
