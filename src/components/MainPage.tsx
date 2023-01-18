@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import CommentPage from "./CommentPage";
 import "./MainPage.css";
 
 export interface Ispot {
