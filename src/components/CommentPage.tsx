@@ -11,7 +11,15 @@ export interface Icomment {
 }
 interface Props {
   handleReturnMain: () => void;
-  spotId: number;
+  displaySpot: Ispot;
+}
+
+export interface Ispot {
+  spot_id: number;
+  name: string;
+  directions: string;
+  rating: number;
+  description: string;
 }
 const URL = "http://localhost:4006";
 //--------------------------------------------------------------------------------------------------------------------JSX Element declarations
@@ -42,8 +50,8 @@ export default function CommentPage(props: Props): JSX.Element {
 
   useEffect(() => {
     getCommentsFromServer();
-  }, [props.spotId]);
-  const filteredCommentList =   commentList.filter((comment) => {return comment.spot_id === props.spotId})
+  }, [props.displaySpot.spot_id]);
+  const filteredCommentList =   commentList.filter((comment) => {return comment.spot_id === props.displaySpot.spot_id})
 //--------------------------------------------------------------------------------------------------------------------POST of a comment
   const postCommentToServer = async (
     spot_id: number,
@@ -54,7 +62,7 @@ export default function CommentPage(props: Props): JSX.Element {
     if (comment.length > 0) {
       try {
         await axios.post(URL + "/comments", {
-          spot_id: props.spotId,
+          spot_id: props.displaySpot.spot_id,
           name: name,
           comment: comment,
           rating: rating,
@@ -72,7 +80,7 @@ export default function CommentPage(props: Props): JSX.Element {
     //  console.log("submitted", pasteSubmit);
 
     postCommentToServer(
-      props.spotId,
+      props.displaySpot.spot_id,
       commentSubmit.name,
       commentSubmit.comment,
       commentSubmit.rating
@@ -82,6 +90,9 @@ export default function CommentPage(props: Props): JSX.Element {
 
   return (
     <div>
+      <div>
+        <h1>{props.displaySpot.name}</h1>
+      </div>
                 <div className="comment-form">
             {/*-------------------------------------------------------------------------------Describes behaviour of the form to enter comment */}
             <form onSubmit={handleCommentSubmit}>

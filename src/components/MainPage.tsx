@@ -12,7 +12,7 @@ export interface Ispot {
 }
 
 interface Props {
-  handleChangeSpotId: (chosenSpot_id: number) => void;
+  handleChangeSpotId: (chosenSpot_id: Ispot) => void;
 }
 
 const URL = "http://localhost:4006";
@@ -37,7 +37,7 @@ export default function MainPage(props: Props): JSX.Element {
 
   return (
     <>
-      <button onClick={getSpotsFromServer}>get spots</button>
+      
       <div className="spot-container">
         {spotList.map((spot) => {
           return (
@@ -49,7 +49,7 @@ export default function MainPage(props: Props): JSX.Element {
               <p>{spot.description}</p>
               <button
                 onClick={() => {
-                  props.handleChangeSpotId(spot.spot_id);
+                  props.handleChangeSpotId(spot);
                 }}
               >
                 comments
