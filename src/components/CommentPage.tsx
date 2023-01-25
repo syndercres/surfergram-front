@@ -85,6 +85,9 @@ export default function CommentPage(props: Props): JSX.Element {
       commentSubmit.comment,
       commentSubmit.rating
     );
+      if(commentSubmit.rating != 0){
+    await axios.patch(URL + `/spots/${props.displaySpot.spot_id}`,{rating:commentSubmit.rating})
+  }
     getCommentsFromServer();
   };
 
