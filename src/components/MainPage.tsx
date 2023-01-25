@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import CommentPage from "./CommentPage";
+import { BackendURL } from "../utils/BackendURL";
+
 import "./MainPage.css";
 
 
@@ -16,7 +17,7 @@ interface Props {
   handleChangeSpotId: (chosenSpot_id: Ispot) => void;
 }
 
-const URL = "http://localhost:4006";
+
 
 function textSummary(text:string, length:number){
  let returnText = "";
@@ -40,7 +41,7 @@ export default function MainPage(props: Props): JSX.Element {
   const getSpotsFromServer = async () => {
     console.log("fetching spot list from api");
     try {
-      const response = await axios.get(URL + "/spots");
+      const response = await axios.get(BackendURL + "/spots");
 
       setSpotList(response.data.rows);
       console.table(spotList);

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { BackendURL } from "../utils/BackendURL";
+
 import "./CommentPage.css";
 //--------------------------------------------------------------------------------------------------------------------INTERFACE declarations
 export interface Icomment {
@@ -21,7 +23,7 @@ export interface Ispot {
   rating: number;
   description: string;
 }
-const URL = "http://localhost:4006";
+
 //--------------------------------------------------------------------------------------------------------------------JSX Element declarations
 export default function CommentPage(props: Props): JSX.Element {
   const [commentList, setCommentList] = useState<Icomment[]>([]);
@@ -61,7 +63,7 @@ export default function CommentPage(props: Props): JSX.Element {
   ) => {
     if (comment.length > 0) {
       try {
-        await axios.post(URL + "/comments", {
+        await axios.post(BackendURL + "/comments", {
           spot_id: props.displaySpot.spot_id,
           name: name,
           comment: comment,
@@ -85,7 +87,7 @@ export default function CommentPage(props: Props): JSX.Element {
       commentSubmit.comment,
       commentSubmit.rating
     );
-      if(commentSubmit.rating != 0){
+      if(commentSubmit.rating !== 0){
     await axios.patch(URL + `/spots/${props.displaySpot.spot_id}`,{rating:commentSubmit.rating})
   }
     getCommentsFromServer();
