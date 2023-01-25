@@ -29,6 +29,8 @@ function textSummary(text:string, length:number){
   return returnText;
 }
 
+
+
 export default function MainPage(props: Props): JSX.Element {
   const [spotList, setSpotList] = useState<Ispot[]>([]);
 
@@ -55,10 +57,9 @@ export default function MainPage(props: Props): JSX.Element {
           return (
             <div className="spot-item" key={spot.spot_id}>
               <h2>{spot.name}</h2>
-              <p>
-                {spot.directions} {spot.rating}
-              </p>
-              <p>{textSummary(spot.description, 20)}</p>
+              <p> {spot.directions} </p>
+              <p>{spot.rating}</p>
+              <p>{textSummary(spot.description, 60)}</p>
               <button
                 onClick={() => {
                   props.handleChangeSpotId(spot);
