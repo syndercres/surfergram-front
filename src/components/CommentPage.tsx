@@ -90,11 +90,15 @@ export default function CommentPage(props: Props): JSX.Element {
 
   return (
     <div>
-      <div>
+      <div className="spot-info">
         <h1>{props.displaySpot.name}</h1>
+        <p>best conditions to go: {props.displaySpot.directions}</p>
+        <p>description: {props.displaySpot.description}</p>
+        <p>spot rating: {props.displaySpot.rating}</p>
       </div>
                 <div className="comment-form">
             {/*-------------------------------------------------------------------------------Describes behaviour of the form to enter comment */}
+        <h1> comments:</h1>
             <form onSubmit={handleCommentSubmit}>
               <input
                 placeholder="your name"
@@ -130,7 +134,7 @@ export default function CommentPage(props: Props): JSX.Element {
               <input type="submit" />
             </form>
           </div>
-      <h1> comments:</h1>
+
       <div className="comment-container">
         {filteredCommentList.map((comment) => {
           return (

@@ -18,6 +18,17 @@ interface Props {
 
 const URL = "http://localhost:4006";
 
+function textSummary(text:string, length:number){
+ let returnText = "";
+ 
+  if(text.length>length){
+    returnText = text.slice(0,length) + "..."
+  } else {
+    returnText = text;
+  }
+  return returnText;
+}
+
 export default function MainPage(props: Props): JSX.Element {
   const [spotList, setSpotList] = useState<Ispot[]>([]);
 
@@ -44,10 +55,10 @@ export default function MainPage(props: Props): JSX.Element {
           return (
             <div className="spot-item" key={spot.spot_id}>
               <h2>{spot.name}</h2>
-              <h3>
+              <p>
                 {spot.directions} {spot.rating}
-              </h3>
-              <p>{spot.description}</p>
+              </p>
+              <p>{textSummary(spot.description, 20)}</p>
               <button
                 onClick={() => {
                   props.handleChangeSpotId(spot);

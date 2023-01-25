@@ -1,0 +1,36 @@
+body{
+    font-family: 'Courier New', Courier, monospace;
+}
+input{
+ border-radius: 15px   ;
+ height: 30px;
+}
+
+.spot-info{
+    background-color: rgb(70, 135, 135);
+    padding: 15px;
+    border-radius: 15px;
+    margin: 20px;
+}
+
+.comment-form{
+    background-color: rgb(70, 135, 135);
+    padding: 15px;
+    border-radius: 15px;
+    margin: 20px;    
+}
+
+.comment-container{
+    background-color: rgb(70, 135, 135);
+    padding: 15px;
+    border-radius: 15px;
+    margin: 20px;
+}
+
+.comment-item{
+    background-color: rgb(106, 164, 164);
+    padding: 5px;
+    border-radius: 15px;
+    margin: 10px;
+}
+

@@ -57,6 +57,8 @@ export default function AddASpot():JSX.Element{
         
       };
     return(
+        <div>
+            <h1>add a new spot here:</h1>
         <div className="comment-form">
         {/*-------------------------------------------------------------------------------Describes behaviour of the form to enter comment */}
         <form onSubmit={handleSpotSubmit}>
@@ -105,6 +107,7 @@ export default function AddASpot():JSX.Element{
 
           <input type="submit" />
         </form>
+      </div>
       </div>
     )
 }
