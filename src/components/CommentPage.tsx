@@ -37,7 +37,7 @@ export default function CommentPage(props: Props): JSX.Element {
   const getCommentsFromServer = async () => {
     console.log("fetching comment list from api");
     try {
-      const response = await axios.get(URL + "/comments");
+      const response = await axios.get(BackendURL + "/comments");
 
       setCommentList(response.data.rows);
       console.log("newly retreived comments",response.data.rows)
@@ -88,7 +88,7 @@ export default function CommentPage(props: Props): JSX.Element {
       commentSubmit.rating
     );
       if(commentSubmit.rating !== 0){
-    await axios.patch(URL + `/spots/${props.displaySpot.spot_id}`,{rating:commentSubmit.rating})
+    await axios.patch(BackendURL + `/spots/${props.displaySpot.spot_id}`,{rating:commentSubmit.rating})
   }
     getCommentsFromServer();
   };
