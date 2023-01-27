@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BackendURL } from "../utils/BackendURL";
 
@@ -32,7 +32,26 @@ export default function CommentPage(): JSX.Element {
     rating: 0,
   });
   const { id } = useParams();
-  const getSpotFromServer = async () => {
+  const callComments = useCallback(
+    async () => {
+ 
+        console.log("fetching comment list from api");
+        try {
+          const response = await axios.get(BackendURL + `/comments/${id}`);
+    
+          setCommentList(response.data.rows);
+          console.log("newly retreived comments", response.data.rows);
+        } catch (error) {
+          console.error("you have an error with spots");
+        }
+        console.log("finished with getcommentsFromServer");
+ 
+    },
+    [id],
+   );
+   
+  
+  const callSpot = useCallback( async () => {
     console.log("fetching spot list from api");
     try {
       const response = await axios.get(BackendURL + `/spots/${id}`);
@@ -41,24 +60,13 @@ export default function CommentPage(): JSX.Element {
     } catch (error) {
       console.error("you have an error with spots");
     }
-  };
-  const getCommentsFromServer = async () => {
-    console.log("fetching comment list from api");
-    try {
-      const response = await axios.get(BackendURL + `/comments/${id}`);
+  },[id])
 
-      setCommentList(response.data.rows);
-      console.log("newly retreived comments", response.data.rows);
-    } catch (error) {
-      console.error("you have an error with spots");
-    }
-    console.log("finished with getcommentsFromServer");
-  };
 
   useEffect(() => {
-    getCommentsFromServer();
-    getSpotFromServer();
-  }, []);
+    callComments();
+    callSpot();
+  }, [callSpot,callComments]);
 
   //--------------------------------------------------------------------------------------------------------------------POST of a comment
   const postCommentToServer = async (
@@ -99,7 +107,7 @@ export default function CommentPage(): JSX.Element {
         rating: commentSubmit.rating,
       });
     }
-    getCommentsFromServer();
+
   };
 if(selectedDisplaySpot){
   return (

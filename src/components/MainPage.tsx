@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { BackendURL } from "../utils/BackendURL";
 
@@ -29,10 +29,8 @@ function textSummary(text: string, length: number) {
 export default function MainPage(): JSX.Element {
   const [spotList, setSpotList] = useState<Ispot[]>([]);
 
-  useEffect(() => {
-    getSpotsFromServer();
-  }, []);
-  const getSpotsFromServer = async () => {
+ 
+  const callSpots = useCallback( async () => {
     console.log("fetching spot list from api");
     try {
       const response = await axios.get(BackendURL + "/spots");
@@ -42,7 +40,10 @@ export default function MainPage(): JSX.Element {
     } catch (error) {
       console.error("you have an error with spots");
     }
-  };
+  },[spotList])
+  useEffect(() => {
+    callSpots();
+  }, [callSpots]);
 
   return (
     <>
