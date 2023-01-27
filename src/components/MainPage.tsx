@@ -56,12 +56,8 @@ export default function MainPage(props: Props): JSX.Element {
               <p> {spot.directions} </p>
               <p>{spot.rating}</p>
               <p>{textSummary(spot.description, 60)}</p>
-              <button
-                onClick={() => {
-                  props.handleChangeSpotId(spot);
-                }}
-              >
-                comments
+              <button>
+                <NavLink to={`comments/${spot.spot_id}`}>comments</NavLink>
               </button>
             </div>
           );

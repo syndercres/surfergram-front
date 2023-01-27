@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { BackendURL } from "../utils/BackendURL";
 
 import "./CommentPage.css";
@@ -11,10 +12,7 @@ export interface Icomment {
   comment: string;
   rating: number;
 }
-interface Props {
-  handleReturnMain: () => void;
-  displaySpot: Ispot;
-}
+
 
 export interface Ispot {
   spot_id: number;
@@ -25,18 +23,29 @@ export interface Ispot {
 }
 
 //--------------------------------------------------------------------------------------------------------------------JSX Element declarations
-export default function CommentPage(props: Props): JSX.Element {
+export default function CommentPage(): JSX.Element {
+  const [selectedDisplaySpot, setSelectedDisplaySpot] = useState<Ispot>()
   const [commentList, setCommentList] = useState<Icomment[]>([]);
   const [commentSubmit, setCommentSubmit] = useState({
     name: "",
     comment: "",
     rating: 0,
   });
+  const { id } = useParams();
+  const getSpotFromServer = async () => {
+    console.log("fetching spot list from api");
+    try {
+      const response = await axios.get(BackendURL + `/spots/${id}`);
 
+      setSelectedDisplaySpot(response.data.rows);
+    } catch (error) {
+      console.error("you have an error with spots");
+    }
+  };
   const getCommentsFromServer = async () => {
     console.log("fetching comment list from api");
     try {
-      const response = await axios.get(BackendURL + "/comments");
+      const response = await axios.get(BackendURL + `/comments/${id}`);
 
       setCommentList(response.data.rows);
       console.log("newly retreived comments", response.data.rows);
@@ -48,13 +57,12 @@ export default function CommentPage(props: Props): JSX.Element {
 
   useEffect(() => {
     getCommentsFromServer();
-  }, [props.displaySpot.spot_id]);
-  const filteredCommentList = commentList.filter((comment) => {
-    return comment.spot_id === props.displaySpot.spot_id;
-  });
+    getSpotFromServer();
+  }, []);
+
   //--------------------------------------------------------------------------------------------------------------------POST of a comment
   const postCommentToServer = async (
-    spot_id: number,
+    spot_id: string,
     name: string,
     comment: string,
     rating: number
@@ -62,7 +70,7 @@ export default function CommentPage(props: Props): JSX.Element {
     if (comment.length > 0) {
       try {
         await axios.post(BackendURL + "/comments", {
-          spot_id: props.displaySpot.spot_id,
+          spot_id: id,
           name: name,
           comment: comment,
           rating: rating,
@@ -78,28 +86,29 @@ export default function CommentPage(props: Props): JSX.Element {
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //  console.log("submitted", pasteSubmit);
-
+    if(id){
     postCommentToServer(
-      props.displaySpot.spot_id,
+      id,
       commentSubmit.name,
       commentSubmit.comment,
       commentSubmit.rating
     );
+  }
     if (commentSubmit.rating !== 0) {
-      await axios.patch(BackendURL + `/spots/${props.displaySpot.spot_id}`, {
+      await axios.patch(BackendURL + `/spots/${id}`, {
         rating: commentSubmit.rating,
       });
     }
     getCommentsFromServer();
   };
-
+if(selectedDisplaySpot){
   return (
     <div>
       <div className="spot-info">
-        <h1>{props.displaySpot.name}</h1>
-        <p>best conditions to go: {props.displaySpot.directions}</p>
-        <p>description: {props.displaySpot.description}</p>
-        <p>spot rating: {props.displaySpot.rating}</p>
+        <h1>{selectedDisplaySpot.name}</h1>
+        <p>best conditions to go: {selectedDisplaySpot.directions}</p>
+        <p>description: {selectedDisplaySpot.description}</p>
+        <p>spot rating: {selectedDisplaySpot.rating}</p>
       </div>
       <div className="comment-form">
         {/*-------------------------------------------------------------------------------Describes behaviour of the form to enter comment */}
@@ -141,7 +150,7 @@ export default function CommentPage(props: Props): JSX.Element {
       </div>
 
       <div className="comment-container">
-        {filteredCommentList.map((comment) => {
+        {commentList.map((comment) => {
           return (
             <div className="comment-item" key={comment.comment_id}>
               <p>
@@ -153,4 +162,11 @@ export default function CommentPage(props: Props): JSX.Element {
       </div>
     </div>
   );
+  }else{
+    return(
+      <div>
+        <h1>big fat error</h1>
+      </div>
+    )
+  }
 }

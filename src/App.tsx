@@ -2,7 +2,7 @@ import MainPage from "./components/MainPage";
 import CommentPage, { Ispot } from "./components/CommentPage";
 import AddASpot from "./components/AddASpot";
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
+import { Routes, Route, Link, NavLink } from "react-router-dom";
 import NavBar from "./components/NavBar";
 
 function App(): JSX.Element {
@@ -27,29 +27,22 @@ function App(): JSX.Element {
   }
   return (
     <>
-      <Routes>
-        <Route path="/" element={<NavBar />} />
-        <Route index element={<MainPage handleChangeSpotId={selectSpot} />} />
-        <Route
-          path="comments/:id"
-          element={
-            <CommentPage
-              displaySpot={displaySpot}
-              handleReturnMain={backToSpots}
-            />
-          }
-        />
-        <Route path="/add-spot" element={<AddASpot />} />
-      </Routes>
-
-      <div className="header-buttons">
-        <button onClick={backToSpots}>spots</button>
+          <div className="header-buttons">
+        <button><NavLink to="">spots</NavLink></button>
         <button>
-          <NavLink to="/add-spot" className="navbarAddresource navitem">
+          <NavLink to="/add-spot">
             add a spot
           </NavLink>
         </button>
       </div>
+      <Routes>
+        <Route path="/" element={<NavBar />} />
+        <Route index element={<MainPage handleChangeSpotId={selectSpot} />} />
+        <Route path="comments/:id" element={<CommentPage/>}/>
+        <Route path="/add-spot" element={<AddASpot />} />
+      </Routes>
+
+
     </>
   );
 }
