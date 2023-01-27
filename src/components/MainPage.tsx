@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { BackendURL } from "../utils/BackendURL";
 
 import "./MainPage.css";
-
 
 export interface Ispot {
   spot_id: number;
@@ -17,20 +17,16 @@ interface Props {
   handleChangeSpotId: (chosenSpot_id: Ispot) => void;
 }
 
+function textSummary(text: string, length: number) {
+  let returnText = "";
 
-
-function textSummary(text:string, length:number){
- let returnText = "";
- 
-  if(text.length>length){
-    returnText = text.slice(0,length) + "..."
+  if (text.length > length) {
+    returnText = text.slice(0, length) + "...";
   } else {
     returnText = text;
   }
   return returnText;
 }
-
-
 
 export default function MainPage(props: Props): JSX.Element {
   const [spotList, setSpotList] = useState<Ispot[]>([]);
@@ -52,7 +48,6 @@ export default function MainPage(props: Props): JSX.Element {
 
   return (
     <>
-      
       <div className="spot-container">
         {spotList.map((spot) => {
           return (

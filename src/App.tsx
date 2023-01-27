@@ -2,6 +2,8 @@ import MainPage from "./components/MainPage";
 import CommentPage, { Ispot } from "./components/CommentPage";
 import AddASpot from "./components/AddASpot";
 import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar";
 
 function App(): JSX.Element {
   const [pageView, setPageView] = useState<"comment" | "main"| "add-spot">("main");
@@ -17,6 +19,16 @@ function App(): JSX.Element {
   }
   return (
     <>
+    <BrowserRouter>
+      <Routes>
+          <Route path="/" element={<NavBar/>}/>
+          <Route index element={<MainPage handleChangeSpotId={selectSpot} />} />
+          <Route path="comments/:id" element={<CommentPage displaySpot={displaySpot} handleReturnMain={backToSpots} />} />
+          <Route path="/add-spot" element={<AddASpot />} />
+
+      </Routes>
+    </BrowserRouter>
+
       <div className="header-buttons">
         <button onClick={backToSpots}>spots</button>
         <button onClick={()=> setPageView("add-spot")}>add a spot</button>
