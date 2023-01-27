@@ -13,9 +13,7 @@ export interface Ispot {
   description: string;
 }
 
-interface Props {
-  handleChangeSpotId: (chosenSpot_id: Ispot) => void;
-}
+
 
 function textSummary(text: string, length: number) {
   let returnText = "";
@@ -28,7 +26,7 @@ function textSummary(text: string, length: number) {
   return returnText;
 }
 
-export default function MainPage(props: Props): JSX.Element {
+export default function MainPage(): JSX.Element {
   const [spotList, setSpotList] = useState<Ispot[]>([]);
 
   useEffect(() => {
