@@ -10,12 +10,12 @@ function App(): JSX.Element {
   return (
     <>
           <div className="header-buttons">
-        <button><NavLink to="">spots</NavLink></button>
-        <button>
+        <NavLink to=""><button>spots</button></NavLink>
+        
           <NavLink to="/add-spot">
-            add a spot
+          <button>add a spot </button>
           </NavLink>
-        </button>
+       
       </div>
       <Routes>
         <Route path="/" element={<NavBar />} />

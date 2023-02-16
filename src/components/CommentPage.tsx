@@ -40,6 +40,7 @@ export default function CommentPage(): JSX.Element {
       const response = await axios.get(BackendURL + `/spots/${id}`);
 
       setSelectedDisplaySpot(response.data.rows);
+      console.log("spot", selectedDisplaySpot)
       
       } catch (error) {
         console.error("you have an error with spots");
@@ -99,7 +100,7 @@ export default function CommentPage(): JSX.Element {
     e.preventDefault();
     //  console.log("submitted", pasteSubmit);
     if(id){
-    postCommentToServer(
+    await postCommentToServer(
       id,
       commentSubmit.name,
       commentSubmit.comment,
@@ -111,7 +112,7 @@ export default function CommentPage(): JSX.Element {
         rating: commentSubmit.rating,
       });
     }
-
+    callComments();
   };
 if(selectedDisplaySpot){
   return (
