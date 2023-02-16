@@ -39,8 +39,8 @@ export default function CommentPage(): JSX.Element {
       try {
       const response = await axios.get(BackendURL + `/spots/${id}`);
 
-      setSelectedDisplaySpot(response.data.rows);
-      console.log("spot", selectedDisplaySpot)
+      setSelectedDisplaySpot(response.data.rows[0]);
+    
       
       } catch (error) {
         console.error("you have an error with spots");
@@ -113,6 +113,7 @@ export default function CommentPage(): JSX.Element {
       });
     }
     callComments();
+    callSpot();
   };
 if(selectedDisplaySpot){
   return (
