@@ -155,7 +155,12 @@ export default function CommentPage(): JSX.Element {
             return (
               <div className="comment-item" key={comment.comment_id}>
                 <p>
-                  {comment.name}: {comment.comment}  {(comment.rating!==0)? <p>gave a rating of: {comment.rating}</p>: <></>}
+                  {comment.name}: {comment.comment}{" "}
+                  {comment.rating !== 0 ? (
+                    <p>gave a rating of: {comment.rating}</p>
+                  ) : (
+                    <></>
+                  )}
                 </p>
               </div>
             );
