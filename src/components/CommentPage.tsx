@@ -32,15 +32,28 @@ export default function CommentPage(): JSX.Element {
     rating: 0,
   });
   const { id } = useParams();
+
+  const callSpot = useCallback( 
+    async () => {
+      console.log("fetching spot list from api");
+      try {
+      const response = await axios.get(BackendURL + `/spots/${id}`);
+
+      setSelectedDisplaySpot(response.data.rows);
+      
+      } catch (error) {
+        console.error("you have an error with spots");
+      }
+  },[id])
+
   const callComments = useCallback(
     async () => {
- 
-        console.log("fetching comment list from api");
+         console.log("fetching comment list from api");
         try {
           const response = await axios.get(BackendURL + `/comments/${id}`);
     
           setCommentList(response.data.rows);
-          console.log("newly retreived comments", response.data.rows);
+       
         } catch (error) {
           console.error("you have an error with spots");
         }
@@ -51,16 +64,7 @@ export default function CommentPage(): JSX.Element {
    );
    
   
-  const callSpot = useCallback( async () => {
-    console.log("fetching spot list from api");
-    try {
-      const response = await axios.get(BackendURL + `/spots/${id}`);
-
-      setSelectedDisplaySpot(response.data.rows);
-    } catch (error) {
-      console.error("you have an error with spots");
-    }
-  },[id])
+ 
 
 
   useEffect(() => {
@@ -173,7 +177,7 @@ if(selectedDisplaySpot){
   }else{
     return(
       <div>
-        <h1>big fat error</h1>
+        <h1>Loading...</h1>
       </div>
     )
   }

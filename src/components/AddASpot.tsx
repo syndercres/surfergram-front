@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
+import { BackendURL } from "../utils/BackendURL";
 
 import "./MainPage.css";
-const URL = "http://localhost:4006";
+const URL = BackendURL;
 export interface Ispot {
   spot_id: number;
   name: string;

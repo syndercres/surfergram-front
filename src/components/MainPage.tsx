@@ -36,11 +36,11 @@ export default function MainPage(): JSX.Element {
       const response = await axios.get(BackendURL + "/spots");
 
       setSpotList(response.data.rows);
-      console.table(spotList);
+     
     } catch (error) {
       console.error("you have an error with spots");
     }
-  },[spotList])
+  },[])
   useEffect(() => {
     callSpots();
   }, [callSpots]);
