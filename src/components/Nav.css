@@ -1,0 +1,16 @@
+.nav-container {
+  background-color: rgb(58, 136, 146);
+  padding: 30px;
+  border-radius: 15px;
+  display: flex;
+  margin: 20px;
+}
+
+.nav-button {
+  margin: 10px;
+}
+
+.nav-links {
+  margin-left: auto;
+  margin-top: 10px;
+}
