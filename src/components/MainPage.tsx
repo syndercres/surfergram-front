@@ -13,8 +13,6 @@ export interface Ispot {
   description: string;
 }
 
-
-
 function textSummary(text: string, length: number) {
   let returnText = "";
 
@@ -29,18 +27,16 @@ function textSummary(text: string, length: number) {
 export default function MainPage(): JSX.Element {
   const [spotList, setSpotList] = useState<Ispot[]>([]);
 
- 
-  const callSpots = useCallback( async () => {
+  const callSpots = useCallback(async () => {
     console.log("fetching spot list from api");
     try {
       const response = await axios.get(BackendURL + "/spots");
 
       setSpotList(response.data.rows);
-     
     } catch (error) {
       console.error("you have an error with spots");
     }
-  },[])
+  }, []);
   useEffect(() => {
     callSpots();
   }, [callSpots]);

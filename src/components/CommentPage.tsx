@@ -13,7 +13,6 @@ export interface Icomment {
   rating: number;
 }
 
-
 export interface Ispot {
   spot_id: number;
   name: string;
@@ -24,7 +23,7 @@ export interface Ispot {
 
 //--------------------------------------------------------------------------------------------------------------------JSX Element declarations
 export default function CommentPage(): JSX.Element {
-  const [selectedDisplaySpot, setSelectedDisplaySpot] = useState<Ispot>()
+  const [selectedDisplaySpot, setSelectedDisplaySpot] = useState<Ispot>();
   const [commentList, setCommentList] = useState<Icomment[]>([]);
   const [commentSubmit, setCommentSubmit] = useState({
     name: "",
@@ -33,45 +32,33 @@ export default function CommentPage(): JSX.Element {
   });
   const { id } = useParams();
 
-  const callSpot = useCallback( 
-    async () => {
-      console.log("fetching spot list from api");
-      try {
+  const callSpot = useCallback(async () => {
+    console.log("fetching spot list from api");
+    try {
       const response = await axios.get(BackendURL + `/spots/${id}`);
 
       setSelectedDisplaySpot(response.data.rows[0]);
-    
-      
-      } catch (error) {
-        console.error("you have an error with spots");
-      }
-  },[id])
+    } catch (error) {
+      console.error("you have an error with spots");
+    }
+  }, [id]);
 
-  const callComments = useCallback(
-    async () => {
-         console.log("fetching comment list from api");
-        try {
-          const response = await axios.get(BackendURL + `/comments/${id}`);
-    
-          setCommentList(response.data.rows);
-       
-        } catch (error) {
-          console.error("you have an error with spots");
-        }
-        console.log("finished with getcommentsFromServer");
- 
-    },
-    [id],
-   );
-   
-  
- 
+  const callComments = useCallback(async () => {
+    console.log("fetching comment list from api");
+    try {
+      const response = await axios.get(BackendURL + `/comments/${id}`);
 
+      setCommentList(response.data.rows);
+    } catch (error) {
+      console.error("you have an error with spots");
+    }
+    console.log("finished with getcommentsFromServer");
+  }, [id]);
 
   useEffect(() => {
     callComments();
     callSpot();
-  }, [callSpot,callComments]);
+  }, [callSpot, callComments]);
 
   //--------------------------------------------------------------------------------------------------------------------POST of a comment
   const postCommentToServer = async (
@@ -99,14 +86,14 @@ export default function CommentPage(): JSX.Element {
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //  console.log("submitted", pasteSubmit);
-    if(id){
-    await postCommentToServer(
-      id,
-      commentSubmit.name,
-      commentSubmit.comment,
-      commentSubmit.rating
-    );
-  }
+    if (id) {
+      await postCommentToServer(
+        id,
+        commentSubmit.name,
+        commentSubmit.comment,
+        commentSubmit.rating
+      );
+    }
     if (commentSubmit.rating !== 0) {
       await axios.patch(BackendURL + `/spots/${id}`, {
         rating: commentSubmit.rating,
@@ -115,72 +102,72 @@ export default function CommentPage(): JSX.Element {
     callComments();
     callSpot();
   };
-if(selectedDisplaySpot){
-  return (
-    <div>
-      <div className="spot-info">
-        <h1>{selectedDisplaySpot.name}</h1>
-        <p>best conditions to go: {selectedDisplaySpot.directions}</p>
-        <p>description: {selectedDisplaySpot.description}</p>
-        <p>spot rating: {selectedDisplaySpot.rating}</p>
-      </div>
-      <div className="comment-form">
-        {/*-------------------------------------------------------------------------------Describes behaviour of the form to enter comment */}
-        <h1> comments:</h1>
-        <form onSubmit={handleCommentSubmit}>
-          <input
-            placeholder="your name"
-            type="text"
-            value={commentSubmit.name}
-            onChange={(e) =>
-              setCommentSubmit({ ...commentSubmit, name: e.target.value })
-            }
-          />
+  if (selectedDisplaySpot) {
+    return (
+      <div>
+        <div className="spot-info">
+          <h1>{selectedDisplaySpot.name}</h1>
+          <p>best conditions to go: {selectedDisplaySpot.directions}</p>
+          <p>description: {selectedDisplaySpot.description}</p>
+          <p>spot rating: {selectedDisplaySpot.rating}</p>
+        </div>
+        <div className="comment-form">
+          {/*-------------------------------------------------------------------------------Describes behaviour of the form to enter comment */}
+          <h1> comments:</h1>
+          <form onSubmit={handleCommentSubmit}>
+            <input
+              placeholder="your name"
+              type="text"
+              value={commentSubmit.name}
+              onChange={(e) =>
+                setCommentSubmit({ ...commentSubmit, name: e.target.value })
+              }
+            />
 
-          <input
-            placeholder="comment here"
-            type="text"
-            value={commentSubmit.comment}
-            onChange={(e) =>
-              setCommentSubmit({
-                ...commentSubmit,
-                comment: e.target.value,
-              })
-            }
-          />
-          <input
-            placeholder="your rating"
-            type="number"
-            value={commentSubmit.rating}
-            onChange={(e) =>
-              setCommentSubmit({
-                ...commentSubmit,
-                rating: e.target.valueAsNumber,
-              })
-            }
-          />
-          <input type="submit" />
-        </form>
-      </div>
+            <input
+              placeholder="comment here"
+              type="text"
+              value={commentSubmit.comment}
+              onChange={(e) =>
+                setCommentSubmit({
+                  ...commentSubmit,
+                  comment: e.target.value,
+                })
+              }
+            />
+            <input
+              placeholder="your rating"
+              type="number"
+              value={commentSubmit.rating}
+              onChange={(e) =>
+                setCommentSubmit({
+                  ...commentSubmit,
+                  rating: e.target.valueAsNumber,
+                })
+              }
+            />
+            <input type="submit" />
+          </form>
+        </div>
 
-      <div className="comment-container">
-        {commentList.map((comment) => {
-          return (
-            <div className="comment-item" key={comment.comment_id}>
-              <p>
-                {comment.name}: {comment.comment} - rating: {comment.rating}
-              </p>
-            </div>
-          );
-        })}
+        <div className="comment-container">
+          {commentList.map((comment) => {
+            return (
+              <div className="comment-item" key={comment.comment_id}>
+                <p>
+                  {comment.name}: {comment.comment} - rating: {comment.rating}
+                </p>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
-  }else{
-    return(
+    );
+  } else {
+    return (
       <div>
         <h1>Loading...</h1>
       </div>
-    )
+    );
   }
 }
