@@ -13,16 +13,16 @@ export interface Ispot {
   description: string;
 }
 
-function textSummary(text: string, length: number) {
-  let returnText = "";
+// function textSummary(text: string, length: number) {
+//   let returnText = "";
 
-  if (text.length > length) {
-    returnText = text.slice(0, length) + "...";
-  } else {
-    returnText = text;
-  }
-  return returnText;
-}
+//   if (text.length > length) {
+//     returnText = text.slice(0, length) + "...";
+//   } else {
+//     returnText = text;
+//   }
+//   return returnText;
+// }
 
 export default function MainPage(): JSX.Element {
   const [spotList, setSpotList] = useState<Ispot[]>([]);
@@ -49,8 +49,7 @@ export default function MainPage(): JSX.Element {
             <div className="spot-item" key={spot.spot_id}>
               <h2>{spot.name}</h2>
               <p> {spot.directions} </p>
-              <p>{spot.rating}</p>
-              <p>{textSummary(spot.description, 60)}</p>
+              <p>{Number(spot.rating).toFixed(1)}</p>
               <button>
                 <NavLink to={`comments/${spot.spot_id}`}>comments</NavLink>
               </button>

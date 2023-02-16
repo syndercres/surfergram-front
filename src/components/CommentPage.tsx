@@ -109,7 +109,7 @@ export default function CommentPage(): JSX.Element {
           <h1>{selectedDisplaySpot.name}</h1>
           <p>best conditions to go: {selectedDisplaySpot.directions}</p>
           <p>description: {selectedDisplaySpot.description}</p>
-          <p>spot rating: {selectedDisplaySpot.rating}</p>
+          <p>current rating: {Number(selectedDisplaySpot.rating).toFixed(1)}</p>
         </div>
         <div className="comment-form">
           {/*-------------------------------------------------------------------------------Describes behaviour of the form to enter comment */}
