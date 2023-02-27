@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { BackendURL } from "../utils/BackendURL";
 
 import "./MainPage.css";
+import RecentComments from "./RecentComments";
 
 export interface Ispot {
   spot_id: number;
@@ -43,6 +44,7 @@ export default function MainPage(): JSX.Element {
 
   return (
     <>
+    <RecentComments/>
       <div className="spot-container">
         {spotList.map((spot) => {
           return (
