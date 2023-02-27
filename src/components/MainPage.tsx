@@ -50,9 +50,9 @@ export default function MainPage(): JSX.Element {
               <h2>{spot.name}</h2>
               <p> {spot.directions} </p>
               <p>{Number(spot.rating).toFixed(1)}</p>
-              <button>
-                <NavLink to={`comments/${spot.spot_id}`}>comments</NavLink>
-              </button>
+             
+                <NavLink to={`comments/${spot.spot_id}`}> <button>comments</button></NavLink>
+              
             </div>
           );
         })}
